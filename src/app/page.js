@@ -7,10 +7,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllItem } from "@/lib/features/storedCartItem/AllCartItem";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [cart, setCart] = useState([]);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    const token = Cookies.get("authToken");
+    console.log("this is token on client side", token);
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
 
   const allItem = useAppSelector((item) => item.storedCartItem);
   console.log("store item", allItem);
