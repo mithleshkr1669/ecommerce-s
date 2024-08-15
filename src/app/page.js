@@ -8,9 +8,11 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllItem } from "@/lib/features/storedCartItem/AllCartItem";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [cart, setCart] = useState([]);
+  const router = useRouter();
   const dispatch = useAppDispatch();
   useEffect(() => {
     const token = Cookies.get("authToken");
