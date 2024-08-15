@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 export default async function dbConnection() {
-  return mongoose.connect(process.env.DB_URL);
+  return mongoose.connect(process.env.MONGODB_URI);
 }
 
 // Function to disconnect Mongoose
