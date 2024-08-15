@@ -27,7 +27,8 @@
     "react-dom": "^18",
     "react-redux": "^9.1.2",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vercel": "^36.0.0"
   },
   "devDependencies": {
     "postcss": "^8",
