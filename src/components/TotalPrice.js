@@ -16,7 +16,8 @@ function TotalPrice() {
   }
 
   let totalPrice = useAppSelector((item) => item.price.totalValue);
-  let finalTotalPrice = totalPrice - discountedPrice;
+  let fixedDecimalTotalPrice=totalPrice.toFixed(2)
+  let finalTotalPrice = fixedDecimalTotalPrice - discountedPrice;
   let fixedDecimalPrice=finalTotalPrice.toFixed(2)
   return (
     <div className="bg-gray-100 p-6 md:rounded-lg shadow-lg self-start">
