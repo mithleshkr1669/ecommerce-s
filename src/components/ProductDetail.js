@@ -1,17 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import QuantitySelector from "./QuantitySelector";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch} from "@/lib/hooks";
 import { addPrice, subtractPrice } from "@/lib/features/totalPrice/price";
 
+
 function ProductDetail({ item }) {
-  // const items = useAppSelector((item) => item.storedCartItem)
   const [allItem, setAllItem] = useState([]);
   const [price, setPrice] = useState(null);
-  // const [totalPrice,setTotalPrice]=useState()
-  const priceFromStore = useAppSelector((price) => price.price);
-  console.log("priceFromSELECTOR", priceFromStore.totalValue);
+  const [refreshUi,setRefreshUi]=useState(false)
+ 
 
   const [totalQuantity, setTotalQuantity] = useState(1);
 
@@ -19,7 +17,6 @@ function ProductDetail({ item }) {
 
   useEffect(() => {
     let cartStored = sessionStorage.getItem("cart");
-    // console.log("cartStored",cartStored)
     if (cartStored) {
       let parsedData = JSON.parse(cartStored);
       setAllItem(parsedData);
@@ -50,21 +47,28 @@ function ProductDetail({ item }) {
     }
   };
 
-  // const handleChange = (e) => {
-  //   const value = parseInt(e.target.value);
-  //   if (!isNaN(value) && value >= 1) {
-  //     setQuantity(value);
-  //   }
-  // };
+  // filtering data and then setting to session storage
   const handleClick = () => {
     let filterData = allItem.filter((items) => items.id !== item.id);
-
+      // setAllItem(filterData)/
     try {
       sessionStorage.setItem("cart", JSON.stringify(filterData));
     } catch (error) {
       console.log("error in setting data", error);
     }
+    setRefreshUi(false);
+    setTimeout(() => {
+      setRefreshUi(true)
+    },2000)
   };
+  const closeModal = () => {
+    setRefreshUi(false); // Close the modal when the user clicks "Close" or outside the modal
+  };
+
+  useEffect(() => {
+    let initialPrice = allItem.reduce((acc, item) => acc + item.price, 0);
+    dispatch(addPrice(initialPrice));
+  }, []);
 
   return (
     <div className="flex mb-5 p-6">
@@ -104,6 +108,22 @@ function ProductDetail({ item }) {
             <button onClick={handleClick} className="text-red-500  md:ml-5">
               REMOVE
             </button>
+            {refreshUi && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-6 rounded shadow-md text-center">
+                <h2 className="text-xl font-semibold mb-4">Item Removed</h2>
+                <p>The item has been removed successfully.Please, refresh the page.</p>
+                <button
+                  onClick={closeModal}
+                  className="bg-orange-500 text-white py-2 px-4 rounded mt-4"
+                >
+                  OKAY!
+                </button>
+              </div>
+            </div>
+    
+            )}
+
           </div>
         </div>
       </div>

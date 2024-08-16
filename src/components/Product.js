@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Product({ products, cart, addToCart, removeFromCart }) {
+export default function Product({ products, cart, addToCart }) {
   const [isAdded, setIsAdded] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const isInCart = cart.some((item) => item.id === products.id);
@@ -14,13 +14,7 @@ export default function Product({ products, cart, addToCart, removeFromCart }) {
     setTimeout(() => setIsAdded(false), 1500);
   };
 
-  const handleRemoveFromCart = () => {
-    removeFromCart(products.id);
-    setIsRemoved(true);
 
-    // Reset the "Removed" animation after 1.5 seconds
-    setTimeout(() => setIsRemoved(false), 1500);
-  };
 
   return (
     <div className="bg-white border p-4 rounded-lg shadow-lg relative">
@@ -30,7 +24,7 @@ export default function Product({ products, cart, addToCart, removeFromCart }) {
         className="w-full h-48 object-cover rounded-lg"
       />
       <h2 className="text-lg font-bold mt-2">{products.name}</h2>
-      <p className="text-gray-500">${products.price.toFixed(2)}</p>
+      <p className="text-gray-500">₹{products.price.toFixed(2)}</p>
 
       {isInCart ? (
         <div className="mt-5">
@@ -40,7 +34,7 @@ export default function Product({ products, cart, addToCart, removeFromCart }) {
               isRemoved ? "bg-gray-500" : ""
             }`}
           >
-            {/* {isRemoved ? 'Removed' : 'Remove Item'} */}Go to Cart
+          Go to Cart
           </Link>
         </div>
       ) : (

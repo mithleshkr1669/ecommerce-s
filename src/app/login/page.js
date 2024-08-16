@@ -40,15 +40,14 @@ export default function Login() {
       const response = await axios.post("/api/login", formData, {
         withCredentials: true,
       });
-      console.log("Finally responsing", response.data); // Access the data property from the response
-      if (response.data.msg === "successful") {
+      console.log("Finally responsing", response.data.msg); // Access the data property from the response
         // localStorage.setItem("isLoggedin", "yes")
         const token = Cookies.get("authToken");
         console.log("this is token on client side", token);
         if (token) {
           router.push("/");
         }
-      }
+      
     } catch (error) {
       console.error("Error in logging:", error);
     }

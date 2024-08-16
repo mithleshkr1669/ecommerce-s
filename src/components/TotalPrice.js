@@ -49,7 +49,7 @@ function TotalPrice() {
       <hr className="my-4" />
       <div className="flex justify-between font-semibold">
         <span>Total Amount</span>
-        <span>₹{finalTotalPrice ? finalTotalPrice : totalPrice}</span>
+        <span>₹{discountedPrice ? finalTotalPrice : totalPrice}</span>
       </div>
       <p className="text-green-500 mt-2">
         You will save ₹{discountedPrice} on this order

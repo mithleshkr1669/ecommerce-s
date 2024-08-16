@@ -20,5 +20,5 @@ const price = createSlice({
   },
 });
 
-export const { addPrice, subtractPrice } = price.actions;
+export const { addPrice, subtractPrice } = price.actions; 
 export default price.reducer;

@@ -10,22 +10,19 @@ import { useEffect, useState } from "react";
 export default function ResponsiveLayout() {
   const [cartItem, setCartItem] = useState([]);
   const dispatch = useAppDispatch();
-  const allItem = useAppSelector((item) => item.storedCartItem);
-  // console.log("store item in cart page",allItem)
+  
   useEffect(() => {
     let cartStored = sessionStorage.getItem("cart");
     if (cartStored) {
       setCartItem(JSON.parse(cartStored));
     }
   }, []);
+  
   useEffect(() => {
     dispatch(getAllItem(cartItem));
   }, [cartItem]);
 
-  useEffect(() => {
-    let initialPrice = cartItem.reduce((acc, item) => acc + item.price, 0);
-    dispatch(addPrice(initialPrice));
-  }, []);
+ 
 
   return (
     <div className="md:p-6">

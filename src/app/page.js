@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getAllItem } from "@/lib/features/storedCartItem/AllCartItem";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { addPrice } from "@/lib/features/totalPrice/price";
 
 export default function Home() {
   const [cart, setCart] = useState([]);
@@ -22,18 +23,15 @@ export default function Home() {
     }
   }, []);
 
-  const allItem = useAppSelector((item) => item.storedCartItem);
-  console.log("store item", allItem);
-
+  
   console.log("cart ", cart);
   useEffect(() => {
     const storedCart = sessionStorage.getItem("cart");
-    // console.log("this is storedCart",storedCart)
+    console.log("this is storedCart",storedCart)
     if (storedCart) {
       try {
         setCart(JSON.parse(storedCart)); // Safely parse the stored cart data
 
-        // console.log("cart get item",cart)
       } catch (error) {
         console.error("Error parsing stored cart data:", error);
         setCart([]);
@@ -54,13 +52,10 @@ export default function Home() {
     setCart([...cart, product]);
   };
 
-  const removeFromCart = (productId) => {
-    setCart(cart.filter((item) => item.id !== productId));
-  };
   useEffect(() => {
-    dispatch(getAllItem(cart));
-    console.log("this is cart item", cart);
-  }, [cart]);
+    let initialPrice = cart.reduce((acc, item) => acc + item.price, 0);
+    dispatch(addPrice(initialPrice));
+  }, []);
 
   return (
     <div className="container mx-auto p-6">
@@ -98,7 +93,7 @@ export default function Home() {
             products={product}
             cart={cart}
             addToCart={addToCart}
-            removeFromCart={removeFromCart}
+            // removeFromCart={removeFromCart}
           />
         ))}
       </div>
