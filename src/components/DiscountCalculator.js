@@ -18,7 +18,7 @@ const DiscountCalculator = ({handleDiscount}) => {
       console.log("fixed discount",discountedPrice)
       // setDiscountedPrice(discountedPrice)
     } else if (name === "percentage") {
-      let discountedPrice = (value / 100) * totalPrice
+      let discountedPrice = ((value / 100) * totalPrice).toFixed(2)
       console.log("percentage",discountedPrice)
       handleDiscount(discountedPrice)      
     } else {
