@@ -24,8 +24,8 @@ function TotalPrice() {
       <h2 className="text-xl font-semibold mb-4">Price Details</h2>
       <div className="space-y-2">
         <div className="flex justify-between">
-          <span>Price (1 item)</span>
-          <span>₹{discountedPrice ? finalTotalPrice : totalPrice}</span>
+          <span>Price</span>
+          <span>₹{discountedPrice ? fixedDecimalPrice : fixedDecimalTotalPrice}</span>
         </div>
         <div className="flex justify-between">
           <span>Discount</span>
